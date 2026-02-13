@@ -3,8 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>For Trisha ❤️</title>
-
-  <!-- Mobile responsive -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -22,12 +20,12 @@
 
     .container {
       width: 90%;
-      max-width: 400px;
+      max-width: 420px;
     }
 
     h1 {
+      color: white;
       font-size: 26px;
-      color: #fff;
     }
 
     .btn-container {
@@ -38,10 +36,8 @@
     }
 
     .btn {
-      flex: 1;
-      margin: 10px;
-      padding: 15px 0;
-      font-size: 18px;
+      padding: 14px 0;
+      font-size: 17px;
       border: none;
       border-radius: 12px;
       color: white;
@@ -49,12 +45,17 @@
       cursor: pointer;
     }
 
+    /* YES button (slightly smaller) */
     .yes {
-      background-color: #28a745;
+      width: 45%;
+      background: #28a745;
+      z-index: 2;
     }
 
+    /* NO button */
     .no {
-      background-color: #dc3545;
+      width: 45%;
+      background: #dc3545;
       position: absolute;
       right: 0;
     }
@@ -64,37 +65,52 @@
 <body>
 
   <div class="container">
+
     <h1>
       Trisha ❤️<br><br>
       Will you be my valentine for my entire life?<br><br>
       — Biprodip
     </h1>
 
-    <div class="btn-container">
+    <div class="btn-container" id="btnArea">
       <button class="btn yes" onclick="goToYes()">Yes 💖</button>
       <button class="btn no" id="noBtn">No 😢</button>
     </div>
+
   </div>
 
-  <script>
-    function goToYes() {
-      window.location.href = "yes.html";
+<script>
+  function goToYes() {
+    window.location.href = "yes.html";
+  }
+
+  const noBtn = document.getElementById("noBtn");
+  const btnArea = document.getElementById("btnArea");
+
+  noBtn.addEventListener("mouseover", moveButton);
+  noBtn.addEventListener("touchstart", moveButton);
+
+  function moveButton() {
+
+    const areaRect = btnArea.getBoundingClientRect();
+
+    const yesSafeZone = areaRect.left + (areaRect.width / 2); 
+    // right half is forbidden (YES button zone)
+
+    let x, y;
+
+    do {
+      x = Math.random() * (window.innerWidth - 100);
+      y = Math.random() * (window.innerHeight - 60);
     }
+    while (x > yesSafeZone - 120); 
+    // prevents NO from coming near YES
 
-    const noBtn = document.getElementById("noBtn");
-
-    noBtn.addEventListener("mouseover", moveButton);
-    noBtn.addEventListener("touchstart", moveButton);
-
-    function moveButton() {
-      const x = Math.random() * (window.innerWidth - 100);
-      const y = Math.random() * (window.innerHeight - 50);
-
-      noBtn.style.position = "fixed";
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
-    }
-  </script>
+    noBtn.style.position = "fixed";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+  }
+</script>
 
 </body>
 </html>
